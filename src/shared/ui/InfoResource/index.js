@@ -1,0 +1,1 @@
+export { InfoResource } from './InfoResource';
