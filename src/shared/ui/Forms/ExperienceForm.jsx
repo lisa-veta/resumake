@@ -1,6 +1,6 @@
 import { Typography } from '@/shared/ui/Typography';
 import { defaultVariantStyle } from '@/shared/ui/Typography/helpers/constant';
-import { useAutoResizeTextarea, useFormState } from '@/shared/hooks';
+import { useAutoResizeTextarea } from '@/shared/hooks';
 import * as SC from './ExperienceForm.styles';
 
 const placeholdersExperienceForm = {
@@ -18,52 +18,46 @@ export const ExperienceForm = ({
     endTime,
     description,
     placeholders = placeholdersExperienceForm,
+    onChange,
 }) => {
-    const { form, handleChange } = useFormState({
-        jobPosition,
-        company,
-        startTime,
-        endTime,
-        description,
-    });
-    const textareaRef = useAutoResizeTextarea(form.description);
+    const textareaRef = useAutoResizeTextarea(description);
 
     return (
         <SC.ExperienceFormContainer>
             <SC.TitleInput
-                value={form.jobPosition}
+                value={jobPosition}
                 placeholder={placeholders.jobPosition}
-                onChange={handleChange('jobPosition')}
+                onChange={e => onChange('jobPosition', e.target.value)}
             />
             <SC.TextWrapper>
                 <SC.TextInput
-                    value={form.company}
+                    value={company}
                     placeholder={placeholders.company}
-                    onChange={handleChange('company')}
+                    onChange={e => onChange('company', e.target.value)}
                 />
                 <SC.DateWrapper>
                     <SC.TextInput
-                        value={form.startTime}
+                        value={startTime}
                         placeholder={placeholders.startTime}
-                        onChange={handleChange('startTime')}
+                        onChange={e => onChange('startTime', e.target.value)}
                         width="25px"
                     />
                     <Typography variant={defaultVariantStyle.subtitle4}>
                         -
                     </Typography>
                     <SC.TextInput
-                        value={form.endTime}
+                        value={endTime}
                         placeholder={placeholders.endTime}
-                        onChange={handleChange('endTime')}
+                        onChange={e => onChange('endTime', e.target.value)}
                         width="25px"
                     />
                 </SC.DateWrapper>
             </SC.TextWrapper>
             <SC.TextSubInput
                 ref={textareaRef}
-                value={form.description}
+                value={description}
                 placeholder={placeholders.description}
-                onChange={handleChange('description')}
+                onChange={e => onChange('description', e.target.value)}
             />
         </SC.ExperienceFormContainer>
     );

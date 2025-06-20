@@ -1,2 +1,2 @@
 export { SideInfoPanel } from './SideInfoPanel';
-export { DynamicListBlock } from './DynamicListBlock';
+export { DynamicListBlock } from './components/DynamicListBlock/DynamicListBlock.jsx';

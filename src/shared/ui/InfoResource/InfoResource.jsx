@@ -1,14 +1,16 @@
 import { useTheme } from 'styled-components';
-import { useState } from 'react';
 import * as SC from './InfoResource.styles';
 
-export const InfoResource = ({ icon: Icon, resource, placeholder }) => {
+export const InfoResource = ({
+    icon: Icon,
+    resource,
+    placeholder,
+    onChange,
+}) => {
     const theme = useTheme();
-    const [text, setText] = useState(resource);
-
     const handleContentChange = e => {
         const { value } = e.target;
-        setText(value);
+        onChange?.(value);
     };
 
     return (
@@ -16,7 +18,7 @@ export const InfoResource = ({ icon: Icon, resource, placeholder }) => {
             {Icon && <Icon color={theme.color.icon.primary} />}
             <SC.TitleInput
                 onChange={handleContentChange}
-                value={text}
+                value={resource}
                 placeholder={placeholder}
             />
         </SC.InfoContainer>

@@ -10,22 +10,22 @@ export const ProjectsForm = ({
     name,
     description,
     placeholders = placeholdersProjectsForm,
+    onChange,
 }) => {
-    const { form, handleChange } = useFormState({ name, description });
-    const textareaRef = useAutoResizeTextarea(form.description);
+    const textareaRef = useAutoResizeTextarea(description);
 
     return (
         <SC.ExperienceFormContainer>
             <SC.TitleInput
-                value={form.name}
+                value={name}
                 placeholder={placeholders.name}
-                onChange={handleChange('name')}
+                onChange={e => onChange('name', e.target.value)}
             />
             <SC.TextSubInput
                 ref={textareaRef}
-                value={form.description}
+                value={description}
                 placeholder={placeholders.description}
-                onChange={handleChange('description')}
+                onChange={e => onChange('description', e.target.value)}
             />
         </SC.ExperienceFormContainer>
     );

@@ -3,30 +3,28 @@ import { Typography } from '@/shared/ui/Typography';
 import { defaultVariantStyle } from '@/shared/ui/Typography/helpers/constant';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme } from '@/app/Themes';
-import { useState } from 'react';
-import { GradationLine } from '@/shared/ui/GradationLine';
-import { Paragraph } from '@/shared/ui/Paragraph';
-import { EducationResource } from '@/shared/ui/EducationResource';
-import { DynamicListBlock } from '@/widgets/template-variant/ui/SideInfoPanel';
+import { useResumeStore } from '@/entities/resume/model/useResumeStore';
 import * as SC from './SideInfoPanel.styles';
-
-const placeholders = {
-    startYear: '2024',
-    finishYear: '2027',
-    speciality: 'Специальность',
-    university: 'Универ',
-    faculty: 'Факультет',
-};
-const HardSkillItem = () => <GradationLine placeholder="Навык" />;
-const SoftSkillItem = () => <Paragraph placeholder="Навык" />;
-const EducationItem = () => <EducationResource placeholders={placeholders} />;
+import {
+    EducationItem,
+    HardSkillItem,
+    SoftSkillItem,
+    DynamicListBlock,
+} from './components';
 
 export const SideInfoPanel = () => {
-    const [photo, setPhoto] = useState(null);
-    const { sections } = sideInfoData;
-    const [hardSkills, setHardSkills] = useState([{ id: Date.now() }]);
-    const [softSkills, setSoftSkills] = useState([{ id: Date.now() }]);
-    const [educationData, setEducationData] = useState([{ id: Date.now() }]);
+    const {
+        photo,
+        setPhoto,
+        hardSkills,
+        setHardSkills,
+        softSkills,
+        setSoftSkills,
+        education,
+        setEducation,
+        contacts,
+        setContacts,
+    } = useResumeStore();
 
     const handlePhotoUpload = e => {
         const file = e.target.files?.[0];
@@ -37,18 +35,42 @@ export const SideInfoPanel = () => {
         }
     };
 
-    const addItem = setter => () =>
-        setter(prev => [...prev, { id: Date.now() }]);
-    const removeItem = setter => id =>
-        setter(prev =>
-            prev.length > 1 ? prev.filter(item => item.id !== id) : prev,
-        );
-    const addHardSkill = addItem(setHardSkills);
-    const removeHardSkill = removeItem(setHardSkills);
-    const addSoftSkill = addItem(setSoftSkills);
-    const removeSoftSkill = removeItem(setSoftSkills);
-    const addEducationData = addItem(setEducationData);
-    const removeEducationData = removeItem(setEducationData);
+    const addHardSkill = () => {
+        setHardSkills([...hardSkills, { id: Date.now(), skill: '' }]);
+    };
+    const removeHardSkill = id => {
+        if (hardSkills.length > 1) {
+            setHardSkills(hardSkills.filter(item => item.id !== id));
+        }
+    };
+
+    const addSoftSkill = () => {
+        setSoftSkills([...softSkills, { id: Date.now(), skill: '' }]);
+    };
+    const removeSoftSkill = id => {
+        if (softSkills.length > 1) {
+            setSoftSkills(softSkills.filter(item => item.id !== id));
+        }
+    };
+
+    const addEducationItem = () => {
+        setEducation([
+            ...education,
+            {
+                id: Date.now(),
+                startYear: '',
+                finishYear: '',
+                speciality: '',
+                university: '',
+                faculty: '',
+            },
+        ]);
+    };
+    const removeEducationItem = id => {
+        if (education.length > 1) {
+            setEducation(education.filter(item => item.id !== id));
+        }
+    };
 
     return (
         <ThemeProvider theme={darkTheme}>
@@ -69,29 +91,23 @@ export const SideInfoPanel = () => {
                 </SC.UploadContainer>
 
                 <SC.SideContainer>
-                    {Object.entries(sections).map(([section, info]) => {
-                        const { name, items } = info;
-                        return (
-                            <SC.BlockWrapper key={section}>
-                                <Typography
-                                    variant={defaultVariantStyle.subtitle2}
-                                >
-                                    {name}
-                                </Typography>
-                                {Object.entries(items).map(([key, item]) => {
-                                    const Component = item.component;
-                                    return (
-                                        <Component key={key} {...item.props} />
-                                    );
-                                })}
-                            </SC.BlockWrapper>
-                        );
-                    })}
+                    <SC.BlockWrapper>
+                        {Object.entries(
+                            sideInfoData.sections.contactInfo.items,
+                        ).map(([key, { component: Component, props }]) => (
+                            <Component
+                                key={key}
+                                {...props}
+                                resource={contacts[key] || ''}
+                                onChange={value => setContacts(key, value)}
+                            />
+                        ))}
+                    </SC.BlockWrapper>
                     <DynamicListBlock
                         title="Образование"
-                        items={educationData}
-                        addItem={addEducationData}
-                        removeItem={removeEducationData}
+                        items={education}
+                        addItem={addEducationItem}
+                        removeItem={removeEducationItem}
                         RenderItem={EducationItem}
                     />
 

@@ -1,6 +1,5 @@
 import { Typography } from '@/shared/ui/Typography';
 import { defaultVariantStyle } from '@/shared/ui/Typography/helpers/constant';
-import { useState } from 'react';
 import * as SC from './EducationResource.styles';
 
 export const EducationResource = ({
@@ -10,39 +9,29 @@ export const EducationResource = ({
     university,
     faculty,
     placeholders,
+    onChange,
 }) => {
-    const [startYearText, setStartYear] = useState(startYear);
-    const [finishYearText, setFinishYear] = useState(finishYear);
-    const [specialityText, setSpeciality] = useState(speciality);
-    const [universityText, setUniversity] = useState(university);
-    const [facultyText, setFaculty] = useState(faculty);
-
     const handleStartYearChange = e => {
-        const { value } = e.target;
-        setStartYear(value);
+        onChange('startYear', e.target.value);
     };
     const handleFinishYearChange = e => {
-        const { value } = e.target;
-        setFinishYear(value);
+        onChange('finishYear', e.target.value);
     };
     const handleSpecialityChange = e => {
-        const { value } = e.target;
-        setSpeciality(value);
+        onChange('speciality', e.target.value);
     };
     const handleUniversityChange = e => {
-        const { value } = e.target;
-        setUniversity(value);
+        onChange('university', e.target.value);
     };
     const handleFacultyChange = e => {
-        const { value } = e.target;
-        setFaculty(value);
+        onChange('faculty', e.target.value);
     };
     return (
         <SC.EducationResource>
             <SC.LineWrapper>
                 <SC.TextInput
                     width="25px"
-                    value={startYearText}
+                    value={startYear}
                     placeholder={placeholders.startYear}
                     onChange={handleStartYearChange}
                 />
@@ -51,13 +40,13 @@ export const EducationResource = ({
                 </Typography>
                 <SC.TextInput
                     width="25px"
-                    value={finishYearText}
+                    value={finishYear}
                     placeholder={placeholders.finishYear}
                     onChange={handleFinishYearChange}
                 />
             </SC.LineWrapper>
             <SC.TitleInput
-                value={specialityText}
+                value={speciality}
                 placeholder={placeholders.speciality}
                 onChange={handleSpecialityChange}
             />
@@ -65,7 +54,7 @@ export const EducationResource = ({
             <SC.LineWrapper>
                 <SC.TextInput
                     width="40px"
-                    value={universityText}
+                    value={university}
                     placeholder={placeholders.university}
                     onChange={handleUniversityChange}
                 />
@@ -73,7 +62,7 @@ export const EducationResource = ({
                     /
                 </Typography>
                 <SC.TextInput
-                    value={facultyText}
+                    value={faculty}
                     placeholder={placeholders.faculty}
                     onChange={handleFacultyChange}
                 />

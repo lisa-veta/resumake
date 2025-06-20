@@ -1,22 +1,25 @@
-import { useState } from 'react';
 import * as SC from './GradationLine.styles';
 
-export const GradationLine = ({ text, placeholder, maxGradation = 10 }) => {
-    const [level, setLevel] = useState(0);
-    const [title, setTitle] = useState(text);
-
+export const GradationLine = ({
+    text,
+    placeholder,
+    maxGradation = 10,
+    level = 0,
+    onChangeText,
+    onChangeLevel,
+}) => {
     const handleLevelChange = index => {
-        setLevel(index);
+        onChangeLevel?.(index);
     };
+
     const handleTitleChange = e => {
-        const { value } = e.target;
-        setTitle(value);
+        onChangeText?.(e.target.value);
     };
 
     return (
         <SC.GradationLineContainer>
             <SC.TextInput
-                value={title}
+                value={text}
                 onChange={handleTitleChange}
                 placeholder={placeholder}
             />

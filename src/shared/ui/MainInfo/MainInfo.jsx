@@ -1,8 +1,8 @@
 import { InfoResource } from '@/shared/ui/InfoResource';
 import { MapPointIcon } from '@/shared/icons';
-import { useEffect, useRef, useState } from 'react';
+import { useAutoResizeTextarea, useFormState } from '@/shared/hooks';
+import { useResumeStore } from '@/entities/resume/model/useResumeStore.js';
 import * as SC from './MainInfo.styles';
-import { useAutoResizeTextarea, useFormState } from '@/shared/hooks/index.js';
 
 const placeholdersMainInfo = {
     name: 'Имя Фамилия',
@@ -12,43 +12,41 @@ const placeholdersMainInfo = {
 };
 
 export const MainInfo = ({
-    name,
-    avocation,
-    place,
-    description,
+    mainInfo,
+    onChange,
     placeholders = placeholdersMainInfo,
 }) => {
-    const { form, handleChange } = useFormState({
-        title: name,
-        avocation,
-        description,
-    });
-    const textareaRef = useAutoResizeTextarea(form.description);
+    const textareaRef = useAutoResizeTextarea(mainInfo.description);
+
+    const handleChange = (key, value) => {
+        onChange?.(key, value);
+    };
 
     return (
         <SC.MainInfoContainer>
             <SC.TitleInput
-                value={form.title}
-                onChange={handleChange('title')}
+                value={mainInfo.name}
+                onChange={e => handleChange('name', e.target.value)}
                 placeholder={placeholders.name}
             />
             <SC.DescriptionWrapper>
                 <SC.TextInput
-                    value={form.avocation}
-                    onChange={handleChange('avocation')}
+                    value={mainInfo.avocation}
+                    onChange={e => handleChange('avocation', e.target.value)}
                     placeholder={placeholders.avocation}
                 />
 
                 <InfoResource
                     icon={MapPointIcon}
-                    resource={place}
+                    resource={mainInfo.place}
                     placeholder={placeholders.place}
+                    onChange={value => handleChange('place', value)}
                 />
             </SC.DescriptionWrapper>
             <SC.TextSubInput
                 ref={textareaRef}
-                value={form.description}
-                onChange={handleChange('description')}
+                value={mainInfo.description}
+                onChange={e => handleChange('description', e.target.value)}
                 placeholder={placeholders.description}
             />
         </SC.MainInfoContainer>
