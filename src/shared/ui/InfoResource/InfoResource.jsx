@@ -1,16 +1,24 @@
-import { Typography } from '@/shared/ui/Typography';
-import { defaultVariantStyle } from '@/shared/ui/Typography/helpers/constant';
-import * as SC from './InfoResource.styles';
 import { useTheme } from 'styled-components';
+import { useState } from 'react';
+import * as SC from './InfoResource.styles';
 
-export const InfoResource = ({ icon: Icon, resource }) => {
+export const InfoResource = ({ icon: Icon, resource, placeholder }) => {
     const theme = useTheme();
+    const [text, setText] = useState(resource);
+
+    const handleContentChange = e => {
+        const { value } = e.target;
+        setText(value);
+    };
+
     return (
         <SC.InfoContainer>
-            {Icon && <Icon color={theme.color.icon.primary}/>}
-            <Typography variant={defaultVariantStyle.subtitle3}>
-                {resource}
-            </Typography>
+            {Icon && <Icon color={theme.color.icon.primary} />}
+            <SC.TitleInput
+                onChange={handleContentChange}
+                value={text}
+                placeholder={placeholder}
+            />
         </SC.InfoContainer>
     );
 };

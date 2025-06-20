@@ -36,7 +36,11 @@ export const UploadContainer = styled.label`
     display: flex;
     align-items: center;
     justify-content: center;
-
+    background-color: ${({ theme }) => theme.color.background.secondary};
+    &:hover {
+        background-color: ${({ theme }) => theme.pink};
+    }
+    transition: background-color 0.3s ease;
     input {
         display: none;
     }
@@ -47,3 +51,62 @@ export const UploadContainer = styled.label`
         object-fit: cover;
     }
 `;
+
+export const SkillWrapper = styled.div`
+    position: relative;
+
+    &:hover button {
+        opacity: 1;
+    }
+`;
+
+export const DeleteButton = styled.button`
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    color: ${({ theme }) => theme.color.text.primary};
+    border-radius: 20px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        background: ${({ theme }) => theme.pink};
+    }
+`;
+
+export const AddButton = styled.button`
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: ${({ theme }) => theme.color.text.primary};
+    padding: 4px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    border: none;
+    opacity: 0;
+    &:hover {
+        background: ${({ theme }) => theme.pink};
+    }
+`;
+
+export const TitleWithAction = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    &:hover button {
+        opacity: 1;
+    }
+`;
+

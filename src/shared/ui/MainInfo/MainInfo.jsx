@@ -1,34 +1,56 @@
-import { Typography } from '@/shared/ui/Typography';
-import { defaultVariantStyle } from '@/shared/ui/Typography/helpers/constant';
 import { InfoResource } from '@/shared/ui/InfoResource';
-import { EnvelopeIcon } from '@/shared/icons';
+import { MapPointIcon } from '@/shared/icons';
+import { useEffect, useRef, useState } from 'react';
 import * as SC from './MainInfo.styles';
+import { useAutoResizeTextarea, useFormState } from '@/shared/hooks/index.js';
+
+const placeholdersMainInfo = {
+    name: 'Имя Фамилия',
+    avocation: 'Должность',
+    description: 'Описание',
+    place: 'Город, Страна',
+};
 
 export const MainInfo = ({
     name,
-    surname,
     avocation,
-    city,
-    country,
+    place,
     description,
+    placeholders = placeholdersMainInfo,
 }) => {
+    const { form, handleChange } = useFormState({
+        title: name,
+        avocation,
+        description,
+    });
+    const textareaRef = useAutoResizeTextarea(form.description);
+
     return (
         <SC.MainInfoContainer>
-            <SC.TitleWrapper>
-                <Typography variant={defaultVariantStyle.h4}>
-                    {name} {surname}
-                </Typography>
-                <Typography variant={defaultVariantStyle.subtitle2}>
-                    {avocation}
-                </Typography>
-                <InfoResource
-                    icon={EnvelopeIcon}
-                    resourse={`${country}, ${city}`}
+            <SC.TitleInput
+                value={form.title}
+                onChange={handleChange('title')}
+                placeholder={placeholders.name}
+            />
+            <SC.DescriptionWrapper>
+                <SC.TextInput
+                    value={form.avocation}
+                    onChange={handleChange('avocation')}
+                    placeholder={placeholders.avocation}
                 />
-            </SC.TitleWrapper>
-            <Typography variant={defaultVariantStyle.subtitle3}>
-                {description}
-            </Typography>
+
+                <InfoResource
+                    icon={MapPointIcon}
+                    resource={place}
+                    placeholder={placeholders.place}
+                />
+            </SC.DescriptionWrapper>
+            <SC.TextSubInput
+                ref={textareaRef}
+                value={form.description}
+                onChange={handleChange('description')}
+                placeholder={placeholders.description}
+            />
         </SC.MainInfoContainer>
     );
 };

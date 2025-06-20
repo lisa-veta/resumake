@@ -5,12 +5,14 @@ export const lightTheme = {
         },
         background: {
             default: '#F2E9E4',
+            secondary: '#858585',
         },
         icon: {
             primary: '#1C1C1C',
         },
     },
     pink: '#E44E7B',
+    orange: '#e4924e',
 };
 
 export const darkTheme = {
@@ -20,10 +22,12 @@ export const darkTheme = {
         },
         background: {
             default: '#22223B',
+            secondary: '#858585',
         },
         icon: {
             primary: '#F2E9E4',
         },
     },
     pink: '#E44E7B',
+    orange: '#e4924e',
 };
