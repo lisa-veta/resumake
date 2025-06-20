@@ -1,20 +1,16 @@
 import { useState } from 'react';
 import * as SC from './Paragraph.styles';
 
-export const Paragraph = ({ text, placeholder }) => {
-    const [textInput, setTextInput] = useState(text);
-
-    const handleTextChange = e => {
-        const { value } = e.target;
-        setTextInput(value);
+export const Paragraph = ({ text, placeholder, onChangeText }) => {
+    const handleChange = e => {
+        onChangeText?.(e.target.value);
     };
-
     return (
         <SC.ParagraphContainer>
             <SC.Circle />
             <SC.TextInput
-                value={textInput}
-                onChange={handleTextChange}
+                value={text}
+                onChange={handleChange}
                 placeholder={placeholder}
             />
         </SC.ParagraphContainer>

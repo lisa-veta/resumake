@@ -3,49 +3,52 @@ import {
     SideInfoPanel,
 } from '@/widgets/template-variant/ui/SideInfoPanel';
 import { MainInfo } from '@/shared/ui/MainInfo';
-import { ExperienceForm, ProjectsForm } from '@/shared/ui/Forms';
-import { useState } from 'react';
+import { useResumeStore } from '@/entities/resume/model/useResumeStore';
 import * as SC from './ModernTemplate.styles';
 import { SectionWrapper, TextWrapper } from './ModernTemplate.styles';
-
-const ExperienceFormItem = () => <ExperienceForm />;
-const ProjectsFormItem = () => <ProjectsForm />;
+import { ExperienceItemRenderer, ProjectItemRenderer } from './components';
 
 export const ModernTemplate = () => {
-    const [experience, setExperience] = useState([{ id: Date.now() }]);
-    const [projects, setProjects] = useState([{ id: Date.now() }]);
+    const {
+        experience,
+        addExperienceItem,
+        removeItemById,
+        projects,
+        addProjectItem,
+        mainInfo,
+        setMainInfo,
+    } = useResumeStore();
 
-    const addItem = setter => () =>
-        setter(prev => [...prev, { id: Date.now() }]);
-    const removeItem = setter => id =>
-        setter(prev =>
-            prev.length > 1 ? prev.filter(item => item.id !== id) : prev,
-        );
-    const addExperience = addItem(setExperience);
-    const removeExperience = removeItem(setExperience);
-    const addProjects = addItem(setProjects);
-    const removeProjects = removeItem(setProjects);
+    const removeExperience = id => removeItemById('experience', id);
+    const removeProjects = id => removeItemById('projects', id);
+
+    const handleMainInfoChange = (key, value) => {
+        setMainInfo({
+            ...mainInfo,
+            [key]: value,
+        });
+    };
     return (
         <SC.Container>
             <SideInfoPanel />
             <TextWrapper>
-                <MainInfo />
+                <MainInfo mainInfo={mainInfo} onChange={handleMainInfoChange} />
                 <SectionWrapper>
                     <DynamicListBlock
                         title="Опыт работы"
                         items={experience}
-                        addItem={addExperience}
+                        addItem={addExperienceItem}
                         removeItem={removeExperience}
-                        RenderItem={ExperienceFormItem}
+                        RenderItem={ExperienceItemRenderer}
                     />
                 </SectionWrapper>
                 <SectionWrapper>
                     <DynamicListBlock
                         title="Проекты"
                         items={projects}
-                        addItem={addProjects}
+                        addItem={addProjectItem}
                         removeItem={removeProjects}
-                        RenderItem={ProjectsFormItem}
+                        RenderItem={ProjectItemRenderer}
                     />
                 </SectionWrapper>
             </TextWrapper>

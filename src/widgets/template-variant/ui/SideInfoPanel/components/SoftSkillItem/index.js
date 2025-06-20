@@ -1,0 +1,1 @@
+export { SoftSkillItem } from './SoftSkillItem';
