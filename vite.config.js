@@ -1,8 +1,8 @@
-import react from '@vitejs/plugin-react';
-import path from 'path';
-import { defineConfig } from 'vite';
+const react = require('@vitejs/plugin-react');
+const path = require('path');
 
-export default defineConfig({
+/** @type {import('vite').UserConfig} */
+module.exports = {
     base: './',
     resolve: {
         alias: {
@@ -11,4 +11,4 @@ export default defineConfig({
         extensions: ['.js', '.jsx'],
     },
     plugins: [react()],
-});
+};
