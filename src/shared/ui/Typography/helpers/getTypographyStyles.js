@@ -72,6 +72,27 @@ export const getTypographyStyles = variant => {
                 font-size: 14px;
                 line-height: 14px;
             `;
+        case defaultVariantStyle.subtitle3:
+            return `
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 12px;
+            `;
+        case defaultVariantStyle.subtitle4:
+            return `
+                font-style: normal;
+                font-weight: 400;
+                font-size: 10px;
+                line-height: 10px;
+            `;
+        case defaultVariantStyle.subtitle5:
+            return `
+                font-style: normal;
+                font-weight: 600;
+                font-size: 10px;
+                line-height: 10px;
+            `;
         case defaultVariantStyle.body1:
             return `
                 font-style: normal;

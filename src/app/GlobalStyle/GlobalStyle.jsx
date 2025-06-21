@@ -11,7 +11,10 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Inter', sans-serif;
     background-color: #22223B;
+    ::selection {
+      background-color: #E44E7B; 
+      color: #F2E9E4;           
+    }
   }
 `;
