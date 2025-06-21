@@ -5,6 +5,7 @@ export const lightTheme = {
         },
         background: {
             default: '#F2E9E4',
+            contrast: '#22223B',
             secondary: '#858585',
         },
         icon: {
@@ -22,6 +23,7 @@ export const darkTheme = {
         },
         background: {
             default: '#22223B',
+            contrast: '#F2E9E4',
             secondary: '#858585',
         },
         icon: {
